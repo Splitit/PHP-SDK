@@ -1,19 +1,24 @@
 {
-    "name": "splitit/splitit-sdk",
+    "name": "splitit/splitit-php-sdk",
     "description": "Splitit's Installments API is the primary Splitit tool for establishing and maintaining installment plans. Use it to verify shopper eligibility, create plans with or without immediate authorization, get plan information, update plan status, and process refunds and cancellations.",
     "type": "library",
     "keywords": [
         "splitit",
         "sdk",
+        "api v3",
         "payments",
-        "installments",
-        "api v3"
+        "installmetns"
     ],
-    "homepage": "https://developers.splitit.com/",
+    "homepage": "https://splitit.com/",
     "license": [
         "MIT"
     ],
-    "authors": [],
+    "authors": [
+        {
+            "name": "Erel Lindzen",
+            "email": "erel.lindzen@splitit.com"
+        }
+    ],
     "support": {
         "email": "support@splitit.com"
     },

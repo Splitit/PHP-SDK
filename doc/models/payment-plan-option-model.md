@@ -25,11 +25,7 @@
   "FirstInstallmentAmount": 45.62,
   "InstallmentAmount": 232.3,
   "LastInstallmentAmount": 187.9,
-  "Links": {
-    "PrivacyPolicyUrl": "PrivacyPolicyUrl8",
-    "TermsAndConditionsUrl": "TermsAndConditionsUrl4",
-    "LearnMoreUrl": "LearnMoreUrl8"
-  },
+  "Links": null,
   "TermsAndConditionsBrief": "TermsAndConditionsBrief6",
   "InstallmentFrequency": "InstallmentFrequency2"
 }

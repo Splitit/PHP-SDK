@@ -18,45 +18,9 @@
 {
   "InstallmentProvider": "InstallmentProvider2",
   "PaymentPlanOptions": [
-    {
-      "NumberOfInstallments": 64,
-      "FirstInstallmentAmount": 177.02,
-      "InstallmentAmount": 107.7,
-      "LastInstallmentAmount": 56.5,
-      "Links": {
-        "PrivacyPolicyUrl": "PrivacyPolicyUrl8",
-        "TermsAndConditionsUrl": "TermsAndConditionsUrl4",
-        "LearnMoreUrl": "LearnMoreUrl8"
-      },
-      "TermsAndConditionsBrief": "TermsAndConditionsBrief6",
-      "InstallmentFrequency": "InstallmentFrequency2"
-    },
-    {
-      "NumberOfInstallments": 64,
-      "FirstInstallmentAmount": 177.02,
-      "InstallmentAmount": 107.7,
-      "LastInstallmentAmount": 56.5,
-      "Links": {
-        "PrivacyPolicyUrl": "PrivacyPolicyUrl8",
-        "TermsAndConditionsUrl": "TermsAndConditionsUrl4",
-        "LearnMoreUrl": "LearnMoreUrl8"
-      },
-      "TermsAndConditionsBrief": "TermsAndConditionsBrief6",
-      "InstallmentFrequency": "InstallmentFrequency2"
-    },
-    {
-      "NumberOfInstallments": 64,
-      "FirstInstallmentAmount": 177.02,
-      "InstallmentAmount": 107.7,
-      "LastInstallmentAmount": 56.5,
-      "Links": {
-        "PrivacyPolicyUrl": "PrivacyPolicyUrl8",
-        "TermsAndConditionsUrl": "TermsAndConditionsUrl4",
-        "LearnMoreUrl": "LearnMoreUrl8"
-      },
-      "TermsAndConditionsBrief": "TermsAndConditionsBrief6",
-      "InstallmentFrequency": "InstallmentFrequency2"
-    }
+    null,
+    {},
+    {}
   ]
 }
 ```

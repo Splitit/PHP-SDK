@@ -17,16 +17,7 @@
 ```json
 {
   "TraceId": "TraceId0",
-  "Error": {
-    "Code": "Code4",
-    "Message": "Message0",
-    "AdditionalInfo": "AdditionalInfo4",
-    "ExtraData": {
-      "key0": "ExtraData4",
-      "key1": "ExtraData5",
-      "key2": "ExtraData6"
-    }
-  }
+  "Error": null
 }
 ```
 

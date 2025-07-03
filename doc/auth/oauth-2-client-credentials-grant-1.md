@@ -28,6 +28,10 @@ Documentation for accessing and setting credentials for OAuth2-production.
 You must initialize the client with *OAuth 2.0 Client Credentials Grant* credentials as shown in the following code snippet. This will fetch the OAuth token automatically when any of the endpoints, requiring *OAuth 2.0 Client Credentials Grant* authentication, are called.
 
 ```php
+use SplititWebApiV3Lib\Authentication\OAuth2ProductionCredentialsBuilder;
+use SplititWebApiV3Lib\Models\OAuthScopeOAuth2ProductionEnum;
+use SplititWebApiV3Lib\SplititWebApiV3ClientBuilder;
+
 $client = SplititWebApiV3ClientBuilder::init()
     ->oAuth2ProductionCredentials(
         OAuth2ProductionCredentialsBuilder::init(
@@ -62,6 +66,10 @@ Scopes enable your application to only request access to the resources it needs 
 Whenever the OAuth Token gets updated, the provided callback implementation will be executed. For instance, you may use it to store your access token whenever it gets updated.
 
 ```php
+use SplititWebApiV3Lib\Authentication\OAuth2ProductionCredentialsBuilder;
+use SplititWebApiV3Lib\Models\OAuthScopeOAuth2ProductionEnum;
+use SplititWebApiV3Lib\SplititWebApiV3ClientBuilder;
+
 $client = SplititWebApiV3ClientBuilder::init()
     ->oAuth2ProductionCredentials(
         OAuth2ProductionCredentialsBuilder::init(
@@ -89,6 +97,10 @@ $client = SplititWebApiV3ClientBuilder::init()
 To authorize a client using a stored access token, set up the `oAuthTokenProvider` in `OAuth2ProductionCredentialsBuilder` along with the other auth parameters before creating the client:
 
 ```php
+use SplititWebApiV3Lib\Authentication\OAuth2ProductionCredentialsBuilder;
+use SplititWebApiV3Lib\Models\OAuthScopeOAuth2ProductionEnum;
+use SplititWebApiV3Lib\SplititWebApiV3ClientBuilder;
+
 $client = SplititWebApiV3ClientBuilder::init()
     ->oAuth2ProductionCredentials(
         OAuth2ProductionCredentialsBuilder::init(

@@ -6,19 +6,19 @@
 Run the following command to install the package and automatically add the dependency to your composer.json file:
 
 ```bash
-composer require "splitit/splitit-sdk:0.0.4"
+composer require "splitit/splitit-php-sdk:0.0.51"
 ```
 
 Or add it to the composer.json file manually as given below:
 
 ```json
 "require": {
-    "splitit/splitit-sdk": "0.0.4"
+    "splitit/splitit-php-sdk": "0.0.51"
 }
 ```
 
 You can also view the package at:
-https://packagist.org/packages/splitit/splitit-sdk#0.0.4
+https://packagist.org/packages/splitit/splitit-php-sdk#0.0.51
 
 ## Test the SDK
 
@@ -31,7 +31,7 @@ You can change the PHPUnit test configuration in the `phpunit.xml` file.
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
@@ -47,13 +47,20 @@ The following parameters are configurable for the API Client:
 | retryOnTimeout | `bool` | Whether to retry on request timeout.<br>*Default*: `true` |
 | httpStatusCodesToRetry | `array` | Http status codes to retry against.<br>*Default*: `408, 413, 429, 500, 502, 503, 504, 521, 522, 524` |
 | httpMethodsToRetry | `array` | Http methods to retry against.<br>*Default*: `'GET', 'PUT'` |
-| proxyConfiguration | [`ProxyConfigurationBuilder`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/proxy-configuration-builder.md) | Represents the proxy configurations for API calls |
-| oAuth2SandboxCredentials | [`OAuth2SandboxCredentials`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/auth/oauth-2-client-credentials-grant.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
-| oAuth2ProductionCredentials | [`OAuth2ProductionCredentials`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/auth/oauth-2-client-credentials-grant-1.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
+| proxyConfiguration | [`ProxyConfigurationBuilder`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/proxy-configuration-builder.md) | Represents the proxy configurations for API calls |
+| oAuth2SandboxCredentials | [`OAuth2SandboxCredentials`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/auth/oauth-2-client-credentials-grant.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
+| oAuth2ProductionCredentials | [`OAuth2ProductionCredentials`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/auth/oauth-2-client-credentials-grant-1.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
 
 The API client can be initialized as follows:
 
 ```php
+use SplititWebApiV3Lib\Environment;
+use SplititWebApiV3Lib\Authentication\OAuth2SandboxCredentialsBuilder;
+use SplititWebApiV3Lib\Models\OAuthScopeOAuth2SandboxEnum;
+use SplititWebApiV3Lib\Authentication\OAuth2ProductionCredentialsBuilder;
+use SplititWebApiV3Lib\Models\OAuthScopeOAuth2ProductionEnum;
+use SplititWebApiV3Lib\SplititWebApiV3ClientBuilder;
+
 $client = SplititWebApiV3ClientBuilder::init()
     ->oAuth2SandboxCredentials(
         OAuth2SandboxCredentialsBuilder::init(
@@ -96,25 +103,25 @@ The SDK can be configured to use a different environment for making API calls. A
 
 This API uses the following authentication schemes.
 
-* [`OAuth2-sandbox (OAuth 2 Client Credentials Grant)`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/auth/oauth-2-client-credentials-grant.md)
-* [`OAuth2-production (OAuth 2 Client Credentials Grant)`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/auth/oauth-2-client-credentials-grant-1.md)
+* [`OAuth2-sandbox (OAuth 2 Client Credentials Grant)`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/auth/oauth-2-client-credentials-grant.md)
+* [`OAuth2-production (OAuth 2 Client Credentials Grant)`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/auth/oauth-2-client-credentials-grant-1.md)
 
 ## List of APIs
 
-* [Installment Plan](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/controllers/installment-plan.md)
+* [Installment Plan](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/controllers/installment-plan.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [ProxyConfigurationBuilder](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/proxy-configuration-builder.md)
+* [ProxyConfigurationBuilder](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/proxy-configuration-builder.md)
 
 ### HTTP
 
-* [HttpRequest](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/http-request.md)
-* [HttpResponse](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/http-response.md)
+* [HttpRequest](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/http-request.md)
+* [HttpResponse](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/http-response.md)
 
 ### Utilities
 
-* [ApiException](https://www.github.com/Splitit/PHP-SDK/tree/0.0.4/doc/api-exception.md)
+* [ApiException](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/api-exception.md)
 

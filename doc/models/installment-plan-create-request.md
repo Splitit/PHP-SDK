@@ -27,55 +27,10 @@
   "AutoCapture": false,
   "Attempt3dSecure": false,
   "TermsAndConditionsAccepted": false,
-  "Shopper": {
-    "FullName": "FullName2",
-    "Email": "Email4",
-    "PhoneNumber": "PhoneNumber2",
-    "Culture": "Culture6",
-    "ExternalId": "ExternalId8"
-  },
-  "PlanData": {
-    "TotalAmount": "TotalAmount4",
-    "Currency": "Currency6",
-    "NumberOfInstallments": 2,
-    "TerminalId": "TerminalId8",
-    "PurchaseMethod": "PhoneOrder",
-    "RefOrderNumber": "RefOrderNumber2",
-    "ExtendedParams": {
-      "key0": "ExtendedParams4",
-      "key1": "ExtendedParams5"
-    }
-  },
-  "BillingAddress": {
-    "AddressLine1": "AddressLine12",
-    "AddressLine2": "AddressLine26",
-    "City": "City4",
-    "Country": "Country0",
-    "State": "State2"
-  },
-  "PaymentMethod": {
-    "Type": "SpreedlyToken",
-    "Card": {
-      "CardHolderFullName": "CardHolderFullName8",
-      "CardNumber": "CardNumber2",
-      "CardExpYear": "CardExpYear4",
-      "CardExpMonth": "CardExpMonth0",
-      "CardCvv": "CardCvv8"
-    },
-    "Token": "Token8",
-    "BluesnapVaultedShopperToken": {
-      "Token": "Token4",
-      "Last4Digit": "Last4Digit6"
-    },
-    "MockerShopperToken": {
-      "Token": "Token0",
-      "Last4Digit": "Last4Digit8"
-    },
-    "SpreedlyToken": {
-      "Token": "Token0",
-      "Last4Digit": "Last4Digit8"
-    }
-  }
+  "Shopper": null,
+  "PlanData": null,
+  "BillingAddress": null,
+  "PaymentMethod": null
 }
 ```
 

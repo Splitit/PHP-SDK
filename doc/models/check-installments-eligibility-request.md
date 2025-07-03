@@ -18,33 +18,9 @@
 
 ```json
 {
-  "PlanData": {
-    "TerminalId": "TerminalId8",
-    "TotalAmount": "TotalAmount4",
-    "FirstInstallmentAmount": 11.28,
-    "Currency": "Currency6",
-    "NumberOfInstallments": 2,
-    "PurchaseMethod": "PhoneOrder",
-    "RefOrderNumber": "RefOrderNumber2",
-    "AllowedInstallmentOptions": [
-      46,
-      47
-    ]
-  },
-  "CardDetails": {
-    "CardHolderFullName": "CardHolderFullName8",
-    "CardNumber": "CardNumber2",
-    "CardExpYear": "CardExpYear4",
-    "CardExpMonth": "CardExpMonth0",
-    "CardCvv": "CardCvv8"
-  },
-  "BillingAddress": {
-    "AddressLine": "AddressLine0",
-    "AddressLine2": "AddressLine26",
-    "City": "City4",
-    "Country": "Country0",
-    "State": "State2"
-  },
+  "PlanData": null,
+  "CardDetails": null,
+  "BillingAddress": null,
   "ShopperIdentifier": "ShopperIdentifier6"
 }
 ```

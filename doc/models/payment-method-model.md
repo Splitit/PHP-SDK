@@ -22,26 +22,11 @@
 ```json
 {
   "Type": "Card",
-  "Card": {
-    "CardHolderFullName": "CardHolderFullName8",
-    "CardNumber": "CardNumber2",
-    "CardExpYear": "CardExpYear4",
-    "CardExpMonth": "CardExpMonth0",
-    "CardCvv": "CardCvv8"
-  },
+  "Card": null,
   "Token": "Token6",
-  "BluesnapVaultedShopperToken": {
-    "Token": "Token4",
-    "Last4Digit": "Last4Digit6"
-  },
-  "MockerShopperToken": {
-    "Token": "Token0",
-    "Last4Digit": "Last4Digit8"
-  },
-  "SpreedlyToken": {
-    "Token": "Token0",
-    "Last4Digit": "Last4Digit8"
-  }
+  "BluesnapVaultedShopperToken": null,
+  "MockerShopperToken": null,
+  "SpreedlyToken": null
 }
 ```
 

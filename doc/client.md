@@ -22,6 +22,13 @@ The following parameters are configurable for the API Client:
 The API client can be initialized as follows:
 
 ```php
+use SplititWebApiV3Lib\Environment;
+use SplititWebApiV3Lib\Authentication\OAuth2SandboxCredentialsBuilder;
+use SplititWebApiV3Lib\Models\OAuthScopeOAuth2SandboxEnum;
+use SplititWebApiV3Lib\Authentication\OAuth2ProductionCredentialsBuilder;
+use SplititWebApiV3Lib\Models\OAuthScopeOAuth2ProductionEnum;
+use SplititWebApiV3Lib\SplititWebApiV3ClientBuilder;
+
 $client = SplititWebApiV3ClientBuilder::init()
     ->oAuth2SandboxCredentials(
         OAuth2SandboxCredentialsBuilder::init(

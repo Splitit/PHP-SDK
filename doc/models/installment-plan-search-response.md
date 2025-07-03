@@ -16,15 +16,7 @@
 ```json
 {
   "PlanList": [
-    {
-      "InstallmentPlanNumber": "InstallmentPlanNumber0",
-      "DateCreated": "2016-03-13T12:52:32.123Z",
-      "RefOrderNumber": "RefOrderNumber0",
-      "PurchaseMethod": "ECommerce",
-      "Status": "Canceled",
-      "Currency": "Currency4",
-      "OriginalAmount": 22.84
-    }
+    null
   ]
 }
 ```

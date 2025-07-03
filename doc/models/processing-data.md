@@ -19,13 +19,7 @@
 {
   "AttemptThreeDSecured": false,
   "SoftDescriptor": "SoftDescriptor6",
-  "ThreeDSData": {
-    "ECI": "ECI6",
-    "CAVV": "CAVV4",
-    "XID": "XID8",
-    "DirectoryServerTxnId": "DirectoryServerTxnId6",
-    "ThreeDSVersion": "ThreeDSVersion2"
-  }
+  "ThreeDSData": null
 }
 ```
 
