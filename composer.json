@@ -1,5 +1,5 @@
 {
-    "name": "splitit/splitit-php-sdk",
+    "name": "splitit/splitit-php-sdk__1_0_4",
     "description": "Splitit's Installments API is the primary Splitit tool for establishing and maintaining installment plans. Use it to verify shopper eligibility, create plans with or without immediate authorization, get plan information, update plan status, and process refunds and cancellations.",
     "type": "library",
     "keywords": [
