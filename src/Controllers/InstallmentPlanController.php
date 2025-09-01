@@ -68,44 +68,6 @@ class InstallmentPlanController extends BaseController
     }
 
     /**
-     * @param string $xSplititIdempotencyKey
-     * @param InstallmentPlanCreateRequest $body
-     * @param string|null $xSplititTestMode
-     * @param string|null $xSplititTouchPoint TouchPoint
-     *
-     * @return InstallmentPlanCreateResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function installmentPlanPost2(
-        string $xSplititIdempotencyKey,
-        InstallmentPlanCreateRequest $body,
-        ?string $xSplititTestMode = null,
-        ?string $xSplititTouchPoint = null
-    ): InstallmentPlanCreateResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api/installmentplans')
-            ->auth('OAuth2-sandbox', 'OAuth2-production')
-            ->parameters(
-                HeaderParam::init('X-Splitit-IdempotencyKey', $xSplititIdempotencyKey),
-                HeaderParam::init('Content-Type', 'application/json-patch+json'),
-                BodyParam::init($body),
-                HeaderParam::init('X-Splitit-TestMode', $xSplititTestMode)
-                    ->serializeBy([TestModesEnum::class, 'checkValue']),
-                HeaderParam::init('X-Splitit-TouchPoint', $xSplititTouchPoint)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('400', ErrorType::init('', PlanErrorResponseException::class))
-            ->throwErrorOn('401', ErrorType::init('', FailedResponseException::class))
-            ->throwErrorOn('403', ErrorType::init('', FailedResponseException::class))
-            ->throwErrorOn('404', ErrorType::init('', FailedResponseException::class))
-            ->throwErrorOn('500', ErrorType::init('', FailedResponseException::class))
-            ->type(InstallmentPlanCreateResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
      * @param string|null $installmentPlanNumber
      * @param string|null $refOrderNumber
      * @param array|null $extendedParams
@@ -180,33 +142,38 @@ class InstallmentPlanController extends BaseController
 
     /**
      * @param string $xSplititIdempotencyKey
-     * @param InstallmentPlanUpdateRequestByIdentifier $body
+     * @param InstallmentPlanCreateRequest $body
+     * @param string|null $xSplititTestMode
      * @param string|null $xSplititTouchPoint TouchPoint
      *
-     * @return InstallmentPlanUpdateResponse Response from the API call
+     * @return InstallmentPlanCreateResponse Response from the API call
      *
      * @throws ApiException Thrown if API call fails
      */
-    public function installmentPlanUpdateOrder2(
+    public function installmentPlanPost2(
         string $xSplititIdempotencyKey,
-        InstallmentPlanUpdateRequestByIdentifier $body,
+        InstallmentPlanCreateRequest $body,
+        ?string $xSplititTestMode = null,
         ?string $xSplititTouchPoint = null
-    ): InstallmentPlanUpdateResponse {
-        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/api/installmentplans/updateorder')
+    ): InstallmentPlanCreateResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::POST, '/api/installmentplans')
             ->auth('OAuth2-sandbox', 'OAuth2-production')
             ->parameters(
                 HeaderParam::init('X-Splitit-IdempotencyKey', $xSplititIdempotencyKey),
                 HeaderParam::init('Content-Type', 'application/json-patch+json'),
                 BodyParam::init($body),
+                HeaderParam::init('X-Splitit-TestMode', $xSplititTestMode)
+                    ->serializeBy([TestModesEnum::class, 'checkValue']),
                 HeaderParam::init('X-Splitit-TouchPoint', $xSplititTouchPoint)
             );
 
         $_resHandler = $this->responseHandler()
+            ->throwErrorOn('400', ErrorType::init('', PlanErrorResponseException::class))
             ->throwErrorOn('401', ErrorType::init('', FailedResponseException::class))
             ->throwErrorOn('403', ErrorType::init('', FailedResponseException::class))
             ->throwErrorOn('404', ErrorType::init('', FailedResponseException::class))
             ->throwErrorOn('500', ErrorType::init('', FailedResponseException::class))
-            ->type(InstallmentPlanUpdateResponse::class);
+            ->type(InstallmentPlanCreateResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -239,6 +206,78 @@ class InstallmentPlanController extends BaseController
             ->throwErrorOn('404', ErrorType::init('', FailedResponseException::class))
             ->throwErrorOn('500', ErrorType::init('', FailedResponseException::class))
             ->type(VerifyAuthorizationResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * @param string $installmentPlanNumber
+     * @param string $xSplititIdempotencyKey
+     * @param InstallmentPlanUpdateRequest $body
+     * @param string|null $xSplititTouchPoint TouchPoint
+     *
+     * @return InstallmentPlanUpdateResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function installmentPlanUpdateOrder(
+        string $installmentPlanNumber,
+        string $xSplititIdempotencyKey,
+        InstallmentPlanUpdateRequest $body,
+        ?string $xSplititTouchPoint = null
+    ): InstallmentPlanUpdateResponse {
+        $_reqBuilder = $this->requestBuilder(
+            RequestMethod::PUT,
+            '/api/installmentplans/{installmentPlanNumber}/updateorder'
+        )
+            ->auth('OAuth2-sandbox', 'OAuth2-production')
+            ->parameters(
+                TemplateParam::init('installmentPlanNumber', $installmentPlanNumber),
+                HeaderParam::init('X-Splitit-IdempotencyKey', $xSplititIdempotencyKey),
+                HeaderParam::init('Content-Type', 'application/json-patch+json'),
+                BodyParam::init($body),
+                HeaderParam::init('X-Splitit-TouchPoint', $xSplititTouchPoint)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('401', ErrorType::init('', FailedResponseException::class))
+            ->throwErrorOn('403', ErrorType::init('', FailedResponseException::class))
+            ->throwErrorOn('404', ErrorType::init('', FailedResponseException::class))
+            ->throwErrorOn('500', ErrorType::init('', FailedResponseException::class))
+            ->type(InstallmentPlanUpdateResponse::class);
+
+        return $this->execute($_reqBuilder, $_resHandler);
+    }
+
+    /**
+     * @param string $xSplititIdempotencyKey
+     * @param InstallmentPlanUpdateRequestByIdentifier $body
+     * @param string|null $xSplititTouchPoint TouchPoint
+     *
+     * @return InstallmentPlanUpdateResponse Response from the API call
+     *
+     * @throws ApiException Thrown if API call fails
+     */
+    public function installmentPlanUpdateOrder2(
+        string $xSplititIdempotencyKey,
+        InstallmentPlanUpdateRequestByIdentifier $body,
+        ?string $xSplititTouchPoint = null
+    ): InstallmentPlanUpdateResponse {
+        $_reqBuilder = $this->requestBuilder(RequestMethod::PUT, '/api/installmentplans/updateorder')
+            ->auth('OAuth2-sandbox', 'OAuth2-production')
+            ->parameters(
+                HeaderParam::init('X-Splitit-IdempotencyKey', $xSplititIdempotencyKey),
+                HeaderParam::init('Content-Type', 'application/json-patch+json'),
+                BodyParam::init($body),
+                HeaderParam::init('X-Splitit-TouchPoint', $xSplititTouchPoint)
+            );
+
+        $_resHandler = $this->responseHandler()
+            ->throwErrorOn('401', ErrorType::init('', FailedResponseException::class))
+            ->throwErrorOn('403', ErrorType::init('', FailedResponseException::class))
+            ->throwErrorOn('404', ErrorType::init('', FailedResponseException::class))
+            ->throwErrorOn('500', ErrorType::init('', FailedResponseException::class))
+            ->type(InstallmentPlanUpdateResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }
@@ -311,45 +350,6 @@ class InstallmentPlanController extends BaseController
             ->throwErrorOn('404', ErrorType::init('', FailedResponseException::class))
             ->throwErrorOn('500', ErrorType::init('', FailedResponseException::class))
             ->type(InstallmentsEligibilityResponse::class);
-
-        return $this->execute($_reqBuilder, $_resHandler);
-    }
-
-    /**
-     * @param string $installmentPlanNumber
-     * @param string $xSplititIdempotencyKey
-     * @param InstallmentPlanUpdateRequest $body
-     * @param string|null $xSplititTouchPoint TouchPoint
-     *
-     * @return InstallmentPlanUpdateResponse Response from the API call
-     *
-     * @throws ApiException Thrown if API call fails
-     */
-    public function installmentPlanUpdateOrder(
-        string $installmentPlanNumber,
-        string $xSplititIdempotencyKey,
-        InstallmentPlanUpdateRequest $body,
-        ?string $xSplititTouchPoint = null
-    ): InstallmentPlanUpdateResponse {
-        $_reqBuilder = $this->requestBuilder(
-            RequestMethod::PUT,
-            '/api/installmentplans/{installmentPlanNumber}/updateorder'
-        )
-            ->auth('OAuth2-sandbox', 'OAuth2-production')
-            ->parameters(
-                TemplateParam::init('installmentPlanNumber', $installmentPlanNumber),
-                HeaderParam::init('X-Splitit-IdempotencyKey', $xSplititIdempotencyKey),
-                HeaderParam::init('Content-Type', 'application/json-patch+json'),
-                BodyParam::init($body),
-                HeaderParam::init('X-Splitit-TouchPoint', $xSplititTouchPoint)
-            );
-
-        $_resHandler = $this->responseHandler()
-            ->throwErrorOn('401', ErrorType::init('', FailedResponseException::class))
-            ->throwErrorOn('403', ErrorType::init('', FailedResponseException::class))
-            ->throwErrorOn('404', ErrorType::init('', FailedResponseException::class))
-            ->throwErrorOn('500', ErrorType::init('', FailedResponseException::class))
-            ->type(InstallmentPlanUpdateResponse::class);
 
         return $this->execute($_reqBuilder, $_resHandler);
     }

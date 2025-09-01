@@ -28,35 +28,6 @@ class InstallmentPlanControllerTest extends BaseTestController
         self::$controller = parent::getClient()->getInstallmentPlanController();
     }
 
-    public function testInstallmentPlanSearch2()
-    {
-        // Parameters for the API call
-        $installmentPlanNumber =
-            null;
-        $refOrderNumber = null;
-        $extendedParams = null;
-        $xSplititTouchPoint =
-            null;
-
-        // Perform API call
-        $result = null;
-        try {
-            $result = self::$controller->installmentPlanSearch(
-                $installmentPlanNumber,
-                $refOrderNumber,
-                $extendedParams,
-                $xSplititTouchPoint
-            );
-        } catch (Exceptions\ApiException $e) {
-        }
-
-        $headers = [];
-        $headers['Content-Type'] = ['text/json', true];
-
-        // Assert result with expected response
-        $this->newTestCase($result)->expectStatus(200)->allowExtraHeaders()->expectHeaders($headers)->assert();
-    }
-
     public function testInstallmentPlanSearch()
     {
         // Parameters for the API call
@@ -110,6 +81,35 @@ class InstallmentPlanControllerTest extends BaseTestController
 
         $headers = [];
         $headers['Content-Type'] = ['application/json', true];
+
+        // Assert result with expected response
+        $this->newTestCase($result)->expectStatus(200)->allowExtraHeaders()->expectHeaders($headers)->assert();
+    }
+
+    public function testInstallmentPlanSearch2()
+    {
+        // Parameters for the API call
+        $installmentPlanNumber =
+            null;
+        $refOrderNumber = null;
+        $extendedParams = null;
+        $xSplititTouchPoint =
+            null;
+
+        // Perform API call
+        $result = null;
+        try {
+            $result = self::$controller->installmentPlanSearch(
+                $installmentPlanNumber,
+                $refOrderNumber,
+                $extendedParams,
+                $xSplititTouchPoint
+            );
+        } catch (Exceptions\ApiException $e) {
+        }
+
+        $headers = [];
+        $headers['Content-Type'] = ['text/json', true];
 
         // Assert result with expected response
         $this->newTestCase($result)->expectStatus(200)->allowExtraHeaders()->expectHeaders($headers)->assert();
