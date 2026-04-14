@@ -10,25 +10,191 @@ $installmentPlanController = $client->getInstallmentPlanController();
 
 ## Methods
 
-* [Installment Plan Get](../../doc/controllers/installment-plan.md#installment-plan-get)
-* [Installment Plan Post 2](../../doc/controllers/installment-plan.md#installment-plan-post-2)
-* [Installment Plan Search](../../doc/controllers/installment-plan.md#installment-plan-search)
-* [Installment Plan Post](../../doc/controllers/installment-plan.md#installment-plan-post)
-* [Installment Plan Update Order 2](../../doc/controllers/installment-plan.md#installment-plan-update-order-2)
-* [Installment Plan Verify Authorization](../../doc/controllers/installment-plan.md#installment-plan-verify-authorization)
-* [Installment Plan Refund](../../doc/controllers/installment-plan.md#installment-plan-refund)
-* [Installment Plan Check Eligibility](../../doc/controllers/installment-plan.md#installment-plan-check-eligibility)
+* [Installment Plan Check Card Validity](../../doc/controllers/installment-plan.md#installment-plan-check-card-validity)
+* [Installment Plan Create Offers](../../doc/controllers/installment-plan.md#installment-plan-create-offers)
+* [Installment Plan Generate Payment Link](../../doc/controllers/installment-plan.md#installment-plan-generate-payment-link)
+* [Installment Plan Update Offers](../../doc/controllers/installment-plan.md#installment-plan-update-offers)
+* [Installment Plan Authorize](../../doc/controllers/installment-plan.md#installment-plan-authorize)
 * [Installment Plan Update Order](../../doc/controllers/installment-plan.md#installment-plan-update-order)
-* [Installment Plan Get Eligibility Terms and Condition](../../doc/controllers/installment-plan.md#installment-plan-get-eligibility-terms-and-condition)
+* [Installment Plan Get by Installment Plan Number](../../doc/controllers/installment-plan.md#installment-plan-get-by-installment-plan-number)
+* [Installment Plan Search](../../doc/controllers/installment-plan.md#installment-plan-search)
+* [Installment Plan Refund](../../doc/controllers/installment-plan.md#installment-plan-refund)
 
 
-# Installment Plan Get
+# Installment Plan Check Card Validity
 
 ```php
-function installmentPlanGet(
-    string $installmentPlanNumber,
-    ?string $xSplititTouchPoint = null
-): InstallmentPlanGetResponse
+function installmentPlanCheckCardValidity(
+    CardValidityRequest $body,
+    ?string $xSplititTouchPoint = null,
+    ?string $xSplititIdempotencyKey = null
+): CardValidityResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`CardValidityRequest`](../../doc/models/card-validity-request.md) | Body, Required | - |
+| `xSplititTouchPoint` | `?string` | Header, Optional | - |
+| `xSplititIdempotencyKey` | `?string` | Header, Optional | - |
+
+## Requires scope
+
+### OAuth2
+
+`api.v4`
+
+## Response Type
+
+[`CardValidityResponse`](../../doc/models/card-validity-response.md)
+
+## Example Usage
+
+```php
+$body = CardValidityRequestBuilder::init()->build();
+
+$installmentPlanController = $client->getInstallmentPlanController();
+
+try {
+    $result = $installmentPlanController->installmentPlanCheckCardValidity($body);
+    echo 'CardValidityResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
+
+
+# Installment Plan Create Offers
+
+```php
+function installmentPlanCreateOffers(OffersRequest $body): OffersResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`OffersRequest`](../../doc/models/offers-request.md) | Body, Required | - |
+
+## Requires scope
+
+### OAuth2
+
+`api.v4`
+
+## Response Type
+
+[`OffersResponse`](../../doc/models/offers-response.md)
+
+## Example Usage
+
+```php
+$body = OffersRequestBuilder::init(
+    PurchaseMethodEnum::INSTORE,
+    'PurchaseAmount2',
+    'Currency4',
+    OffersShopperDetailsBuilder::init(
+        'LastName6',
+        'Email6'
+    )->build(),
+    OffersPaymentMethodBuilder::init(
+        OffersCardDetailsBuilder::init(
+            'CardNumber2',
+            90,
+            228
+        )->build()
+    )->build()
+)->build();
+
+$installmentPlanController = $client->getInstallmentPlanController();
+
+try {
+    $result = $installmentPlanController->installmentPlanCreateOffers($body);
+    echo 'OffersResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
+
+
+# Installment Plan Generate Payment Link
+
+```php
+function installmentPlanGeneratePaymentLink(PaymentLinkRequest $body): PaymentLinkResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`PaymentLinkRequest`](../../doc/models/payment-link-request.md) | Body, Required | - |
+
+## Requires scope
+
+### OAuth2
+
+`api.v4`
+
+## Response Type
+
+[`PaymentLinkResponse`](../../doc/models/payment-link-response.md)
+
+## Example Usage
+
+```php
+$body = PaymentLinkRequestBuilder::init(
+    'Amount8',
+    'Currency4',
+    PurchaseMethodEnum::INSTORE,
+    OffersShopperDetailsBuilder::init(
+        'LastName6',
+        'Email6'
+    )->build()
+)->build();
+
+$installmentPlanController = $client->getInstallmentPlanController();
+
+try {
+    $result = $installmentPlanController->installmentPlanGeneratePaymentLink($body);
+    echo 'PaymentLinkResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
+
+
+# Installment Plan Update Offers
+
+```php
+function installmentPlanUpdateOffers(string $installmentPlanNumber, UpdateOffersRequest $body): OffersResponse
 ```
 
 ## Parameters
@@ -36,427 +202,103 @@ function installmentPlanGet(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `installmentPlanNumber` | `string` | Template, Required | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
+| `body` | [`UpdateOffersRequest`](../../doc/models/update-offers-request.md) | Body, Required | - |
 
 ## Requires scope
 
-### OAuth2-sandbox
+### OAuth2
 
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
+`api.v4`
 
 ## Response Type
 
-[`InstallmentPlanGetResponse`](../../doc/models/installment-plan-get-response.md)
+[`OffersResponse`](../../doc/models/offers-response.md)
 
 ## Example Usage
 
 ```php
 $installmentPlanNumber = 'installmentPlanNumber6';
 
-$result = $installmentPlanController->installmentPlanGet($installmentPlanNumber);
+$body = UpdateOffersRequestBuilder::init()->build();
+
+$installmentPlanController = $client->getInstallmentPlanController();
+
+try {
+    $result = $installmentPlanController->installmentPlanUpdateOffers(
+        $installmentPlanNumber,
+        $body
+    );
+    echo 'OffersResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
 
 
-# Installment Plan Post 2
+# Installment Plan Authorize
 
 ```php
-function installmentPlanPost2(
-    string $xSplititIdempotencyKey,
-    InstallmentPlanCreateRequest $body,
-    ?string $xSplititTestMode = null,
-    ?string $xSplititTouchPoint = null
-): InstallmentPlanCreateResponse
+function installmentPlanAuthorize(string $installmentPlanNumber, AuthorizeRequest $body): AuthorizeResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `xSplititIdempotencyKey` | `string` | Header, Required | - |
-| `body` | [`InstallmentPlanCreateRequest`](../../doc/models/installment-plan-create-request.md) | Body, Required | - |
-| `xSplititTestMode` | [`?string(TestModesEnum)`](../../doc/models/test-modes-enum.md) | Header, Optional | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
+| `installmentPlanNumber` | `string` | Template, Required | - |
+| `body` | [`AuthorizeRequest`](../../doc/models/authorize-request.md) | Body, Required | - |
 
 ## Requires scope
 
-### OAuth2-sandbox
+### OAuth2
 
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
+`api.v4`
 
 ## Response Type
 
-[`InstallmentPlanCreateResponse`](../../doc/models/installment-plan-create-response.md)
+[`AuthorizeResponse`](../../doc/models/authorize-response.md)
 
 ## Example Usage
 
 ```php
-$xSplititIdempotencyKey = 'X-Splitit-IdempotencyKey2';
+$installmentPlanNumber = 'installmentPlanNumber6';
 
-$body = InstallmentPlanCreateRequestBuilder::init(
+$body = AuthorizeRequestBuilder::init(
+    'OfferId8',
     false,
     false
 )->build();
 
-$result = $installmentPlanController->installmentPlanPost2(
-    $xSplititIdempotencyKey,
-    $body
-);
+$installmentPlanController = $client->getInstallmentPlanController();
+
+try {
+    $result = $installmentPlanController->installmentPlanAuthorize(
+        $installmentPlanNumber,
+        $body
+    );
+    echo 'AuthorizeResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 400 | - | [`PlanErrorResponseException`](../../doc/models/plan-error-response-exception.md) |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-
-
-# Installment Plan Search
-
-```php
-function installmentPlanSearch(
-    ?string $installmentPlanNumber = null,
-    ?string $refOrderNumber = null,
-    ?array $extendedParams = null,
-    ?string $xSplititTouchPoint = null
-): InstallmentPlanSearchResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `installmentPlanNumber` | `?string` | Query, Optional | - |
-| `refOrderNumber` | `?string` | Query, Optional | - |
-| `extendedParams` | `?array` | Query, Optional | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
-
-## Requires scope
-
-### OAuth2-sandbox
-
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
-
-## Response Type
-
-[`InstallmentPlanSearchResponse`](../../doc/models/installment-plan-search-response.md)
-
-## Example Usage
-
-```php
-$result = $installmentPlanController->installmentPlanSearch();
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-
-
-# Installment Plan Post
-
-```php
-function installmentPlanPost(
-    string $xSplititIdempotencyKey,
-    InstallmentPlanInitiateRequest $body,
-    ?string $xSplititTestMode = null,
-    ?string $xSplititTouchPoint = null
-): InitiatePlanResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `xSplititIdempotencyKey` | `string` | Header, Required | - |
-| `body` | [`InstallmentPlanInitiateRequest`](../../doc/models/installment-plan-initiate-request.md) | Body, Required | - |
-| `xSplititTestMode` | [`?string(TestModesEnum)`](../../doc/models/test-modes-enum.md) | Header, Optional | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
-
-## Requires scope
-
-### OAuth2-sandbox
-
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
-
-## Response Type
-
-[`InitiatePlanResponse`](../../doc/models/initiate-plan-response.md)
-
-## Example Usage
-
-```php
-$xSplititIdempotencyKey = 'X-Splitit-IdempotencyKey2';
-
-$body = InstallmentPlanInitiateRequestBuilder::init()->build();
-
-$result = $installmentPlanController->installmentPlanPost(
-    $xSplititIdempotencyKey,
-    $body
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 400 | - | [`PlanErrorResponseException`](../../doc/models/plan-error-response-exception.md) |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-
-
-# Installment Plan Update Order 2
-
-```php
-function installmentPlanUpdateOrder2(
-    string $xSplititIdempotencyKey,
-    InstallmentPlanUpdateRequestByIdentifier $body,
-    ?string $xSplititTouchPoint = null
-): InstallmentPlanUpdateResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `xSplititIdempotencyKey` | `string` | Header, Required | - |
-| `body` | [`InstallmentPlanUpdateRequestByIdentifier`](../../doc/models/installment-plan-update-request-by-identifier.md) | Body, Required | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
-
-## Requires scope
-
-### OAuth2-sandbox
-
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
-
-## Response Type
-
-[`InstallmentPlanUpdateResponse`](../../doc/models/installment-plan-update-response.md)
-
-## Example Usage
-
-```php
-$xSplititIdempotencyKey = 'X-Splitit-IdempotencyKey2';
-
-$body = InstallmentPlanUpdateRequestByIdentifierBuilder::init()->build();
-
-$result = $installmentPlanController->installmentPlanUpdateOrder2(
-    $xSplititIdempotencyKey,
-    $body
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-
-
-# Installment Plan Verify Authorization
-
-```php
-function installmentPlanVerifyAuthorization(
-    string $installmentPlanNumber,
-    ?string $xSplititTouchPoint = null
-): VerifyAuthorizationResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `installmentPlanNumber` | `string` | Template, Required | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
-
-## Requires scope
-
-### OAuth2-sandbox
-
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
-
-## Response Type
-
-[`VerifyAuthorizationResponse`](../../doc/models/verify-authorization-response.md)
-
-## Example Usage
-
-```php
-$installmentPlanNumber = 'installmentPlanNumber6';
-
-$result = $installmentPlanController->installmentPlanVerifyAuthorization($installmentPlanNumber);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-
-
-# Installment Plan Refund
-
-```php
-function installmentPlanRefund(
-    string $installmentPlanNumber,
-    string $xSplititIdempotencyKey,
-    InstallmentPlanRefundRequest $body,
-    ?string $xSplititTouchPoint = null
-): InstallmentPlanRefundResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `installmentPlanNumber` | `string` | Template, Required | - |
-| `xSplititIdempotencyKey` | `string` | Header, Required | - |
-| `body` | [`InstallmentPlanRefundRequest`](../../doc/models/installment-plan-refund-request.md) | Body, Required | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
-
-## Requires scope
-
-### OAuth2-sandbox
-
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
-
-## Response Type
-
-[`InstallmentPlanRefundResponse`](../../doc/models/installment-plan-refund-response.md)
-
-## Example Usage
-
-```php
-$installmentPlanNumber = 'installmentPlanNumber6';
-
-$xSplititIdempotencyKey = 'X-Splitit-IdempotencyKey2';
-
-$body = InstallmentPlanRefundRequestBuilder::init(
-    'Amount8'
-)->build();
-
-$result = $installmentPlanController->installmentPlanRefund(
-    $installmentPlanNumber,
-    $xSplititIdempotencyKey,
-    $body
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-
-
-# Installment Plan Check Eligibility
-
-```php
-function installmentPlanCheckEligibility(
-    string $xSplititIdempotencyKey,
-    CheckInstallmentsEligibilityRequest $body,
-    ?string $xSplititTouchPoint = null
-): InstallmentsEligibilityResponse
-```
-
-## Parameters
-
-| Parameter | Type | Tags | Description |
-|  --- | --- | --- | --- |
-| `xSplititIdempotencyKey` | `string` | Header, Required | - |
-| `body` | [`CheckInstallmentsEligibilityRequest`](../../doc/models/check-installments-eligibility-request.md) | Body, Required | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
-
-## Requires scope
-
-### OAuth2-sandbox
-
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
-
-## Response Type
-
-[`InstallmentsEligibilityResponse`](../../doc/models/installments-eligibility-response.md)
-
-## Example Usage
-
-```php
-$xSplititIdempotencyKey = 'X-Splitit-IdempotencyKey2';
-
-$body = CheckInstallmentsEligibilityRequestBuilder::init()->build();
-
-$result = $installmentPlanController->installmentPlanCheckEligibility(
-    $xSplititIdempotencyKey,
-    $body
-);
-```
-
-## Errors
-
-| HTTP Status Code | Error Description | Exception Class |
-|  --- | --- | --- |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
 
 
 # Installment Plan Update Order
@@ -464,10 +306,8 @@ $result = $installmentPlanController->installmentPlanCheckEligibility(
 ```php
 function installmentPlanUpdateOrder(
     string $installmentPlanNumber,
-    string $xSplititIdempotencyKey,
-    InstallmentPlanUpdateRequest $body,
-    ?string $xSplititTouchPoint = null
-): InstallmentPlanUpdateResponse
+    UpdateOrderRequest $body
+): UpdateOrderResponse
 ```
 
 ## Parameters
@@ -475,94 +315,197 @@ function installmentPlanUpdateOrder(
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `installmentPlanNumber` | `string` | Template, Required | - |
-| `xSplititIdempotencyKey` | `string` | Header, Required | - |
-| `body` | [`InstallmentPlanUpdateRequest`](../../doc/models/installment-plan-update-request.md) | Body, Required | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
+| `body` | [`UpdateOrderRequest`](../../doc/models/update-order-request.md) | Body, Required | - |
 
 ## Requires scope
 
-### OAuth2-sandbox
+### OAuth2
 
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
+`api.v4`
 
 ## Response Type
 
-[`InstallmentPlanUpdateResponse`](../../doc/models/installment-plan-update-response.md)
+[`UpdateOrderResponse`](../../doc/models/update-order-response.md)
 
 ## Example Usage
 
 ```php
 $installmentPlanNumber = 'installmentPlanNumber6';
 
-$xSplititIdempotencyKey = 'X-Splitit-IdempotencyKey2';
+$body = UpdateOrderRequestBuilder::init(
+    ShippingStatusEnum::DELIVERED
+)->build();
 
-$body = InstallmentPlanUpdateRequestBuilder::init()->build();
+$installmentPlanController = $client->getInstallmentPlanController();
 
-$result = $installmentPlanController->installmentPlanUpdateOrder(
-    $installmentPlanNumber,
-    $xSplititIdempotencyKey,
-    $body
-);
+try {
+    $result = $installmentPlanController->installmentPlanUpdateOrder(
+        $installmentPlanNumber,
+        $body
+    );
+    echo 'UpdateOrderResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
 
 
-# Installment Plan Get Eligibility Terms and Condition
+# Installment Plan Get by Installment Plan Number
 
 ```php
-function installmentPlanGetEligibilityTermsAndCondition(
-    string $ipn,
-    ?string $xSplititTouchPoint = null
-): EligibilityTermsAndConditionResponse
+function installmentPlanGetByInstallmentPlanNumber(
+    string $installmentPlanNumber
+): InstallmentPlanDetailsResponse
 ```
 
 ## Parameters
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `ipn` | `string` | Template, Required | - |
-| `xSplititTouchPoint` | `?string` | Header, Optional | TouchPoint |
+| `installmentPlanNumber` | `string` | Template, Required | - |
 
 ## Requires scope
 
-### OAuth2-sandbox
+### OAuth2
 
-`api.v3`
-
-### OAuth2-production
-
-`api.v3`
+`api.v4`
 
 ## Response Type
 
-[`EligibilityTermsAndConditionResponse`](../../doc/models/eligibility-terms-and-condition-response.md)
+[`InstallmentPlanDetailsResponse`](../../doc/models/installment-plan-details-response.md)
 
 ## Example Usage
 
 ```php
-$ipn = 'ipn4';
+$installmentPlanNumber = 'installmentPlanNumber6';
 
-$result = $installmentPlanController->installmentPlanGetEligibilityTermsAndCondition($ipn);
+$installmentPlanController = $client->getInstallmentPlanController();
+
+try {
+    $result = $installmentPlanController->installmentPlanGetByInstallmentPlanNumber($installmentPlanNumber);
+    echo 'InstallmentPlanDetailsResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
 ```
 
 ## Errors
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 401 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 403 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 404 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
-| 500 | - | [`FailedResponseException`](../../doc/models/failed-response-exception.md) |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
+
+
+# Installment Plan Search
+
+```php
+function installmentPlanSearch(InstallmentPlanSearchRequest $body): InstallmentPlanSearchDetailsResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `body` | [`InstallmentPlanSearchRequest`](../../doc/models/installment-plan-search-request.md) | Body, Required | - |
+
+## Requires scope
+
+### OAuth2
+
+`api.v4`
+
+## Response Type
+
+[`InstallmentPlanSearchDetailsResponse`](../../doc/models/installment-plan-search-details-response.md)
+
+## Example Usage
+
+```php
+$body = InstallmentPlanSearchRequestBuilder::init()->build();
+
+$installmentPlanController = $client->getInstallmentPlanController();
+
+try {
+    $result = $installmentPlanController->installmentPlanSearch($body);
+    echo 'InstallmentPlanSearchDetailsResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
+
+
+# Installment Plan Refund
+
+```php
+function installmentPlanRefund(string $installmentPlanNumber, RefundRequest $body): RefundResponse
+```
+
+## Parameters
+
+| Parameter | Type | Tags | Description |
+|  --- | --- | --- | --- |
+| `installmentPlanNumber` | `string` | Template, Required | - |
+| `body` | [`RefundRequest`](../../doc/models/refund-request.md) | Body, Required | - |
+
+## Requires scope
+
+### OAuth2
+
+`api.v4`
+
+## Response Type
+
+[`RefundResponse`](../../doc/models/refund-response.md)
+
+## Example Usage
+
+```php
+$installmentPlanNumber = 'installmentPlanNumber6';
+
+$body = RefundRequestBuilder::init(
+    'Amount8'
+)->build();
+
+$installmentPlanController = $client->getInstallmentPlanController();
+
+try {
+    $result = $installmentPlanController->installmentPlanRefund(
+        $installmentPlanNumber,
+        $body
+    );
+    echo 'RefundResponse:';
+    var_dump($result);
+} catch (ApiErrorResponseException $exp) {
+    echo 'Caught ApiErrorResponseException:', $exp;
+} catch (ApiException $exp) {
+    echo 'Caught:', $exp;
+}
+```
+
+## Errors
+
+| HTTP Status Code | Error Description | Exception Class |
+|  --- | --- | --- |
+| Default | Error | [`ApiErrorResponseException`](../../doc/models/api-error-response-exception.md) |
 

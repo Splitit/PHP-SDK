@@ -12,4 +12,7 @@
 | `INSTORE` |
 | `PHONEORDER` |
 | `ECOMMERCE` |
+| `MOTO` |
+| `INSTOREVCC` |
+| `ECOMMERCEVCC` |
 

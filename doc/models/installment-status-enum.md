@@ -9,7 +9,12 @@
 
 | Name |
 |  --- |
-| `PENDING` |
-| `PROCESSED` |
+| `NONE` |
+| `WAITINGFORPROCESSDATE` |
+| `FINISHED` |
+| `DELETED` |
+| `STOPPED` |
 | `CANCELED` |
+| `AWAITINGCAPTURE` |
+| `AWAITINGVOID` |
 
