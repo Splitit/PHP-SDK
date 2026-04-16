@@ -5,7 +5,7 @@ The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| environment | `Environment` | The API environment. <br> **Default: `Environment.PRODUCTION`** |
+| environment | [`Environment`](../README.md#environments) | The API environment. <br> **Default: `Environment.SANDBOX`** |
 | timeout | `int` | Timeout for API calls in seconds.<br>*Default*: `0` |
 | enableRetries | `bool` | Whether to enable retries and backoff feature.<br>*Default*: `false` |
 | numberOfRetries | `int` | The number of retries to make.<br>*Default*: `0` |
@@ -16,47 +16,40 @@ The following parameters are configurable for the API Client:
 | httpStatusCodesToRetry | `array` | Http status codes to retry against.<br>*Default*: `408, 413, 429, 500, 502, 503, 504, 521, 522, 524` |
 | httpMethodsToRetry | `array` | Http methods to retry against.<br>*Default*: `'GET', 'PUT'` |
 | proxyConfiguration | [`ProxyConfigurationBuilder`](../doc/proxy-configuration-builder.md) | Represents the proxy configurations for API calls |
-| oAuth2SandboxCredentials | [`OAuth2SandboxCredentials`](auth/oauth-2-client-credentials-grant.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
-| oAuth2ProductionCredentials | [`OAuth2ProductionCredentials`](auth/oauth-2-client-credentials-grant-1.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
+| oAuth2Credentials | [`OAuth2Credentials`](auth/oauth-2-client-credentials-grant.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
+| apiKeyCredentials | [`ApiKeyCredentials`](auth/custom-header-signature.md) | The Credentials Setter for Custom Header Signature |
 
 The API client can be initialized as follows:
 
 ```php
-use SplititWebApiV3Lib\Environment;
-use SplititWebApiV3Lib\Authentication\OAuth2SandboxCredentialsBuilder;
-use SplititWebApiV3Lib\Models\OAuthScopeOAuth2SandboxEnum;
-use SplititWebApiV3Lib\Authentication\OAuth2ProductionCredentialsBuilder;
-use SplititWebApiV3Lib\Models\OAuthScopeOAuth2ProductionEnum;
-use SplititWebApiV3Lib\SplititWebApiV3ClientBuilder;
+use SplititWebApiV4Lib\Environment;
+use SplititWebApiV4Lib\Authentication\OAuth2CredentialsBuilder;
+use SplititWebApiV4Lib\Models\OAuthScopeOAuth2Enum;
+use SplititWebApiV4Lib\Authentication\ApiKeyCredentialsBuilder;
+use SplititWebApiV4Lib\SplititWebApiV4ClientBuilder;
 
-$client = SplititWebApiV3ClientBuilder::init()
-    ->oAuth2SandboxCredentials(
-        OAuth2SandboxCredentialsBuilder::init(
+$client = SplititWebApiV4ClientBuilder::init()
+    ->oAuth2Credentials(
+        OAuth2CredentialsBuilder::init(
             'OAuthClientId',
             'OAuthClientSecret'
         )
             ->oAuthScopes(
                 [
-                    OAuthScopeOAuth2SandboxEnum::API_V3
+                    OAuthScopeOAuth2Enum::API_V4
                 ]
             )
     )
-    ->oAuth2ProductionCredentials(
-        OAuth2ProductionCredentialsBuilder::init(
-            'OAuthClientId',
-            'OAuthClientSecret'
+    ->apiKeyCredentials(
+        ApiKeyCredentialsBuilder::init(
+            'X-Splitit-Api-Key'
         )
-            ->oAuthScopes(
-                [
-                    OAuthScopeOAuth2ProductionEnum::API_V3
-                ]
-            )
     )
-    ->environment(Environment::PRODUCTION)
+    ->environment(Environment::SANDBOX)
     ->build();
 ```
 
-## splitit-web-api-v3 Client
+## splitit-web-api-v4 Client
 
 The gateway for the SDK. This class acts as a factory for the Controllers and also holds the configuration of the SDK.
 

@@ -1,43 +1,38 @@
 
-# Getting Started with splitit-web-api-v3
+# Getting Started with splitit-web-api-v4
+
+## Introduction
+
+Splitit Orchestration API for managing installment plans.
 
 ## Install the Package
 
 Run the following command to install the package and automatically add the dependency to your composer.json file:
 
 ```bash
-composer require "splitit/splitit-php-sdk:0.0.51"
+composer require "splitit/splitit-php-sdk:2.0.11"
 ```
 
 Or add it to the composer.json file manually as given below:
 
 ```json
 "require": {
-    "splitit/splitit-php-sdk": "0.0.51"
+    "splitit/splitit-php-sdk": "2.0.11"
 }
 ```
 
 You can also view the package at:
-https://packagist.org/packages/splitit/splitit-php-sdk#0.0.51
-
-## Test the SDK
-
-Unit tests in this SDK can be run using PHPUnit.
-
-1. First install the dependencies using composer including the `require-dev` dependencies.
-2. Run `vendor\bin\phpunit --verbose` from commandline to execute tests. If you have installed PHPUnit globally, run tests using `phpunit --verbose` instead.
-
-You can change the PHPUnit test configuration in the `phpunit.xml` file.
+https://packagist.org/packages/splitit/splitit-php-sdk#2.0.11
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| environment | `Environment` | The API environment. <br> **Default: `Environment.PRODUCTION`** |
+| environment | [`Environment`](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/README.md#environments) | The API environment. <br> **Default: `Environment.SANDBOX`** |
 | timeout | `int` | Timeout for API calls in seconds.<br>*Default*: `0` |
 | enableRetries | `bool` | Whether to enable retries and backoff feature.<br>*Default*: `false` |
 | numberOfRetries | `int` | The number of retries to make.<br>*Default*: `0` |
@@ -47,44 +42,37 @@ The following parameters are configurable for the API Client:
 | retryOnTimeout | `bool` | Whether to retry on request timeout.<br>*Default*: `true` |
 | httpStatusCodesToRetry | `array` | Http status codes to retry against.<br>*Default*: `408, 413, 429, 500, 502, 503, 504, 521, 522, 524` |
 | httpMethodsToRetry | `array` | Http methods to retry against.<br>*Default*: `'GET', 'PUT'` |
-| proxyConfiguration | [`ProxyConfigurationBuilder`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/proxy-configuration-builder.md) | Represents the proxy configurations for API calls |
-| oAuth2SandboxCredentials | [`OAuth2SandboxCredentials`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/auth/oauth-2-client-credentials-grant.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
-| oAuth2ProductionCredentials | [`OAuth2ProductionCredentials`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/auth/oauth-2-client-credentials-grant-1.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
+| proxyConfiguration | [`ProxyConfigurationBuilder`](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/proxy-configuration-builder.md) | Represents the proxy configurations for API calls |
+| oAuth2Credentials | [`OAuth2Credentials`](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/auth/oauth-2-client-credentials-grant.md) | The Credentials Setter for OAuth 2 Client Credentials Grant |
+| apiKeyCredentials | [`ApiKeyCredentials`](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/auth/custom-header-signature.md) | The Credentials Setter for Custom Header Signature |
 
 The API client can be initialized as follows:
 
 ```php
-use SplititWebApiV3Lib\Environment;
-use SplititWebApiV3Lib\Authentication\OAuth2SandboxCredentialsBuilder;
-use SplititWebApiV3Lib\Models\OAuthScopeOAuth2SandboxEnum;
-use SplititWebApiV3Lib\Authentication\OAuth2ProductionCredentialsBuilder;
-use SplititWebApiV3Lib\Models\OAuthScopeOAuth2ProductionEnum;
-use SplititWebApiV3Lib\SplititWebApiV3ClientBuilder;
+use SplititWebApiV4Lib\Environment;
+use SplititWebApiV4Lib\Authentication\OAuth2CredentialsBuilder;
+use SplititWebApiV4Lib\Models\OAuthScopeOAuth2Enum;
+use SplititWebApiV4Lib\Authentication\ApiKeyCredentialsBuilder;
+use SplititWebApiV4Lib\SplititWebApiV4ClientBuilder;
 
-$client = SplititWebApiV3ClientBuilder::init()
-    ->oAuth2SandboxCredentials(
-        OAuth2SandboxCredentialsBuilder::init(
+$client = SplititWebApiV4ClientBuilder::init()
+    ->oAuth2Credentials(
+        OAuth2CredentialsBuilder::init(
             'OAuthClientId',
             'OAuthClientSecret'
         )
             ->oAuthScopes(
                 [
-                    OAuthScopeOAuth2SandboxEnum::API_V3
+                    OAuthScopeOAuth2Enum::API_V4
                 ]
             )
     )
-    ->oAuth2ProductionCredentials(
-        OAuth2ProductionCredentialsBuilder::init(
-            'OAuthClientId',
-            'OAuthClientSecret'
+    ->apiKeyCredentials(
+        ApiKeyCredentialsBuilder::init(
+            'X-Splitit-Api-Key'
         )
-            ->oAuthScopes(
-                [
-                    OAuthScopeOAuth2ProductionEnum::API_V3
-                ]
-            )
     )
-    ->environment(Environment::PRODUCTION)
+    ->environment(Environment::SANDBOX)
     ->build();
 ```
 
@@ -96,32 +84,32 @@ The SDK can be configured to use a different environment for making API calls. A
 
 | Name | Description |
 |  --- | --- |
-| production | **Default** Sandbox |
-| environment2 | Production |
+| SANDBOX | **Default** Sandbox Environment (Transactional API) |
+| PRODUCTION | Production Environment (Transactional API) |
 
 ## Authorization
 
 This API uses the following authentication schemes.
 
-* [`OAuth2-sandbox (OAuth 2 Client Credentials Grant)`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/auth/oauth-2-client-credentials-grant.md)
-* [`OAuth2-production (OAuth 2 Client Credentials Grant)`](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/auth/oauth-2-client-credentials-grant-1.md)
+* [`OAuth2 (OAuth 2 Client Credentials Grant)`](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/auth/oauth-2-client-credentials-grant.md)
+* [`ApiKey (Custom Header Signature)`](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/auth/custom-header-signature.md)
 
 ## List of APIs
 
-* [Installment Plan](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/controllers/installment-plan.md)
+* [Installment Plan](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/controllers/installment-plan.md)
 
 ## SDK Infrastructure
 
 ### Configuration
 
-* [ProxyConfigurationBuilder](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/proxy-configuration-builder.md)
+* [ProxyConfigurationBuilder](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/proxy-configuration-builder.md)
 
 ### HTTP
 
-* [HttpRequest](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/http-request.md)
-* [HttpResponse](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/http-response.md)
+* [HttpRequest](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/http-request.md)
+* [HttpResponse](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/http-response.md)
 
 ### Utilities
 
-* [ApiException](https://www.github.com/Splitit/PHP-SDK/tree/0.0.51/doc/api-exception.md)
+* [ApiException](https://www.github.com/Splitit/PHP-SDK/tree/2.0.11/doc/api-exception.md)
 
